@@ -1,0 +1,11 @@
+{
+  "folders": [
+	{
+		"path": "."
+	},
+	{
+		"path": "../../lua/src3/src3/match-3"
+	}
+],
+  "settings": {}
+}
