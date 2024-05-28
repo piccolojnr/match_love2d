@@ -27,14 +27,13 @@ function GameOverState:update(dt)
 end
 
 function GameOverState:render()
-    love.graphics.setFont(gFonts['large'])
-
-    love.graphics.setColor(56, 56, 56, 234)
+    love.graphics.setColor(0, 0, 0, 128 / 255)
     love.graphics.rectangle('fill', VIRTUAL_WIDTH / 2 - 64, 64, 128, 136, 4)
-
-    love.graphics.setColor(99, 155, 255, 255)
-    love.graphics.printf('GAME OVER', VIRTUAL_WIDTH / 2 - 64, 64, 128, 'center')
+    love.graphics.setFont(gFonts['medium-large'])
+    love.graphics.setColor(56, 56, 56, 234)
+    love.graphics.printf('GAME OVER', VIRTUAL_WIDTH / 2 - 64, 74, 128, 'center')
     love.graphics.setFont(gFonts['medium'])
-    love.graphics.printf('Your Score: ' .. tostring(self.score), VIRTUAL_WIDTH / 2 - 64, 140, 128, 'center')
-    love.graphics.printf('Press Enter', VIRTUAL_WIDTH / 2 - 64, 180, 128, 'center')
+    love.graphics.setColor(99, 155, 255, 125)
+    love.graphics.printf('Your Score: ' .. tostring(self.score), VIRTUAL_WIDTH / 2 - 64, 130, 128, 'center')
+    love.graphics.printf('Press Enter', VIRTUAL_WIDTH / 2 - 64, 170, 128, 'center')
 end

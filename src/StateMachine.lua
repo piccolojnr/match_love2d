@@ -22,6 +22,10 @@ function StateMachine:update(dt)
     self.current:update(dt)
 end
 
+function StateMachine:textinput(text)
+    self.current:textinput(text)
+end
+
 function StateMachine:render()
     self.current:render()
 end

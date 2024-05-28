@@ -1,3 +1,79 @@
+function ternary(cond, T, F)
+    if cond then return T else return F end
+end
+
+--- Calculates the score goal for a given level.
+-- @param level The level for which to calculate the score goal.
+-- @return The score goal for the given level.
+function calculateScoreGoalForLevel(level)
+    local baseScore = 1000 -- Base score goal for level 1
+    local multiplier = 1.2 -- Multiplier for score goal increase per level
+
+    return baseScore * (multiplier ^ (level - 1))
+end
+
+-- Calculates the time allowed for a given level.
+-- @param level The level for which to calculate the time.
+-- @return The calculated time in seconds.
+function calculateTimeForLevel(level)
+    local baseTime = 60  -- Base time for level 1 (in seconds)
+    local increment = 10 -- Additional time per level
+
+    return baseTime + (increment * (level - 1))
+end
+
+-- Returns the color set corresponding to the given level.
+-- @param level The level for which to retrieve the color set.
+-- @return The color set corresponding to the given level.
+function getColorSetForLevel(level)
+    if level <= 3 then
+        return colorSets[1]
+    elseif level <= 6 then
+        return colorSets[2]
+    elseif level <= 9 then
+        return colorSets[3]
+    elseif level <= 15 then
+        return colorSets[4]
+    elseif level <= 20 then
+        return colorSets[5]
+    else
+        return colorSets[6]
+    end
+end
+
+-- Computes the cumulative weights for a given set of weights.
+-- @param weights The array of weight information.
+-- @return cumulativeWeights The array of cumulative weights.
+-- @return totalWeight The total weight of all the weight information.
+-- Author: piccolo
+function computeCumulativeWeights(weights)
+    local cumulativeWeights = {}
+    local totalWeight = 0
+
+    for i, weightInfo in ipairs(weights) do
+        totalWeight = totalWeight + weightInfo.weight
+        table.insert(cumulativeWeights, { variety = weightInfo.variety, cumulativeWeight = totalWeight })
+    end
+
+    return cumulativeWeights, totalWeight
+end
+
+-- Selects a variety from a list of weighted options based on their cumulative weights.
+-- @param cumulativeWeights A table containing the cumulative weights of each variety.
+--                          Each entry should have a 'cumulativeWeight' field and a 'variety' field.
+-- @param totalWeight The total weight of all the varieties.
+-- @return The selected variety.
+-- Author: piccolo
+function weightedRandomSelection(cumulativeWeights, totalWeight)
+    local randomValue = math.random() * totalWeight
+
+    for i, weightInfo in ipairs(cumulativeWeights) do
+        if randomValue <= weightInfo.cumulativeWeight then
+            return weightInfo.variety
+        end
+    end
+end
+
 --[[
     GD50
     Match-3 Remake

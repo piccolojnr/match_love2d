@@ -4,6 +4,10 @@
     "love.filesystem.load": "loadfile"
   },
   "Lua.workspace.library": ["${3rd}/love2d/library"],
-  "Lua.diagnostics.disable": ["lowercase-global", "redundant-parameter"],
+  "Lua.diagnostics.disable": [
+    "lowercase-global",
+    "redundant-parameter",
+    "missing-parameter"
+  ],
   "Lua.diagnostics.globals": ["class_commons", "StateMachine"]
 }

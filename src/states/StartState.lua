@@ -154,11 +154,11 @@ end
 function StartState:drawOptions(y)
     -- draw rect behind start and quit game text
     love.graphics.setColor(1, 1, 1, 128 / 255)
-    love.graphics.rectangle('fill', VIRTUAL_WIDTH / 2 - 76, VIRTUAL_HEIGHT / 2 + y, 150, 58, 6)
+    love.graphics.rectangle('fill', VIRTUAL_WIDTH / 2 - 76, VIRTUAL_HEIGHT / 2 + y, 150, 120, 6)
 
     -- draw Start text
     love.graphics.setFont(gFonts['medium'])
-    self:drawTextShadow('Start', VIRTUAL_HEIGHT / 2 + y + 8)
+    self:drawTextShadow('Start', VIRTUAL_HEIGHT / 2 + y + 8 + 62)
 
     if self.currentMenuItem == 1 then
         love.graphics.setColor(99 / 255, 155 / 255, 1, 1)
@@ -166,11 +166,11 @@ function StartState:drawOptions(y)
         love.graphics.setColor(48 / 255, 96 / 255, 130 / 255, 1)
     end
 
-    love.graphics.printf('Start', 0, VIRTUAL_HEIGHT / 2 + y + 8, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf('Start', 0, VIRTUAL_HEIGHT / 2 + y + 8 + 62, VIRTUAL_WIDTH, 'center')
 
     -- draw Quit Game text
     love.graphics.setFont(gFonts['medium'])
-    self:drawTextShadow('Quit Game', VIRTUAL_HEIGHT / 2 + y + 33)
+    self:drawTextShadow('Quit Game', VIRTUAL_HEIGHT / 2 + y + 33 + 62)
 
     if self.currentMenuItem == 2 then
         love.graphics.setColor(99 / 255, 155 / 255, 1, 1)
@@ -178,7 +178,7 @@ function StartState:drawOptions(y)
         love.graphics.setColor(48 / 255, 96 / 255, 130 / 255, 1)
     end
 
-    love.graphics.printf('Quit Game', 0, VIRTUAL_HEIGHT / 2 + y + 33, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf('Quit Game', 0, VIRTUAL_HEIGHT / 2 + y + 33 + 62, VIRTUAL_WIDTH, 'center')
 end
 
 function StartState:drawTextShadow(text, y)

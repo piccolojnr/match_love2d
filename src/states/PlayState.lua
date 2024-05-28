@@ -26,28 +26,30 @@ function PlayState:init()
     end)
 
     -- subtract 1 from timer every second
-    Timer.every(1, function()
-        self.timer = self.timer - 1
+    -- Timer.every(1, function()
+    --     self.timer = self.timer - 1
 
-        -- play warning sound on timer if we get low
-        if self.timer <= 5 then
-            gSounds['clock']:play()
-        end
-    end)
+    --     -- play warning sound on timer if we get low
+    --     if self.timer <= 5 then
+    --         gSounds['clock']:play()
+    --     end
+    -- end)
 end
 
 function PlayState:enter(params)
     -- grab level # from the params we're passed
-    self.level = params.level
+    self.level = params.level or 1
+
+    self.timer = calculateTimeForLevel(self.level)
 
     -- spawn a board and place it toward the right
-    self.board = params.board or Board(VIRTUAL_WIDTH - 272, 16)
+    self.board = params.board or Board(VIRTUAL_WIDTH - 272, 16, self.level)
 
     -- grab score from params if it was passed
     self.score = params.score or 0
 
     -- score we have to reach to get to the next level
-    self.scoreGoal = self.level * 1.25 * 1000
+    self.scoreGoal = calculateScoreGoalForLevel(self.level)
 end
 
 function PlayState:update(dt)
@@ -56,16 +58,16 @@ function PlayState:update(dt)
     end
 
     -- go back to start if time runs out
-    if self.timer <= 0 then
-        -- clear timers from prior PlayStates
-        Timer.clear()
+    -- if self.timer <= 0 then
+    --     -- clear timers from prior PlayStates
+    --     Timer.clear()
 
-        gSounds['game-over']:play()
+    --     gSounds['game-over']:play()
 
-        gStateMachine:change('game-over', {
-            score = self.score
-        })
-    end
+    --     gStateMachine:change('game-over', {
+    --         score = self.score
+    --     })
+    -- end
 
     -- go to next level if we surpassed score goal
     if self.score >= self.scoreGoal then
@@ -75,7 +77,7 @@ function PlayState:update(dt)
         gSounds['next-level']:play()
 
         -- change to begin game state with new level (incremented)
-        gStateMachine:change('begin-state', {
+        gStateMachine:change('begin-game', {
             level = self.level + 1,
             score = self.score
         })
@@ -170,7 +172,9 @@ function PlayState:calculateMatches()
 
         -- add score for each match
         for k, match in pairs(matches) do
-            self.score = self.score + #match * 50
+            for j, tile in pairs(match) do
+                self.score = self.score + tile.points
+            end
         end
 
         -- remove any tiles that matched from the board, making empty spaces

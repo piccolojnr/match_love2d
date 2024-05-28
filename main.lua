@@ -34,14 +34,17 @@ function love.load()
     gSounds['music']:setLooping(true)
     gSounds['music']:play()
 
+    loadGame()
+
     -- initialize state machine with all state-returning functions
     gStateMachine = StateMachine {
         ['start'] = function() return StartState() end,
         ['begin-game'] = function() return BeginGameState() end,
         ['play'] = function() return PlayState() end,
-        ['game-over'] = function() return GameOverState() end
+        ['game-over'] = function() return GameOverState() end,
+        ['testing'] = function() return TestingState() end
     }
-    gStateMachine:change('start')
+    gStateMachine:change('testing')
 
     --keep track of scrollong our background on the X axis
     backgroundX = 0
@@ -50,8 +53,12 @@ function love.load()
     love.keyboard.keysPressed = {}
 end
 
-function love.resize(w, h)
-    love.resize(w, h)
+-- function love.resize(w, h)
+--     love.resize(w, h)
+-- end
+
+function love.textinput(text)
+    gStateMachine:textinput(text)
 end
 
 function love.keypressed(key)

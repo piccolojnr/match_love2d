@@ -1,9 +1,22 @@
 Board = Class {}
 
-function Board:init(x, y)
+
+
+function Board:init(x, y, level)
     self.x = x
     self.y = y
+    self.level = level
+
+    -- set up a table of tile colors for this level
+    self.colorSet = getColorSetForLevel(self.level)
+    self.numColors = #self.colorSet
+
+    -- set up a table of tile varieties and their weights for this level
+    self.cumulativeWeights, self.totalWeight = computeCumulativeWeights(tileVarietyWeights)
+
     self.matches = {}
+
+
 
     self:initializeTiles()
 end
@@ -12,12 +25,18 @@ function Board:initializeTiles()
     self.tiles = {}
 
     for tileY = 1, 8 do
-        -- emoty table that will serve as a new row
+        -- empty table that will serve as a new row
         table.insert(self.tiles, {})
 
         for tileX = 1, 8 do
             --create a new tile at X, Y with a random color and variety
-            table.insert(self.tiles[tileY], Tile(tileX, tileY, math.random(18), math.random(6)))
+
+
+            local colorIndex = tileColors[self.colorSet[math.random(self.numColors)]]
+
+            local varietyIndex = weightedRandomSelection(self.cumulativeWeights, self.totalWeight)
+            table.insert(self.tiles[tileY],
+                Tile(tileX, tileY, colorIndex, varietyIndex))
         end
     end
 end

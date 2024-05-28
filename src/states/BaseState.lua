@@ -25,4 +25,6 @@ function BaseState:exit() end
 
 function BaseState:update(dt) end
 
+function BaseState:textinput(text) end
+
 function BaseState:render() end
