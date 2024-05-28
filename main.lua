@@ -44,7 +44,7 @@ function love.load()
         ['game-over'] = function() return GameOverState() end,
         ['testing'] = function() return TestingState() end
     }
-    gStateMachine:change('testing')
+    gStateMachine:change('start')
 
     --keep track of scrollong our background on the X axis
     backgroundX = 0
